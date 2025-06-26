@@ -1,10 +1,14 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Dashboard = () => {
-  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
+
+  const handleLogout = async () => {
+    await signOut();
+  };
 
   return (
     <div className="min-h-screen bg-gradient-zenalyst">
@@ -17,7 +21,7 @@ const Dashboard = () => {
             <Button 
               variant="ghost" 
               className="text-white hover:text-purple-300 hover:bg-white/10"
-              onClick={() => navigate('/')}
+              onClick={handleLogout}
             >
               Logout
             </Button>
@@ -30,9 +34,11 @@ const Dashboard = () => {
           <h1 className="text-4xl font-bold text-white mb-6">
             Welcome to Your Dashboard
           </h1>
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            This is where you'll manage your due diligence projects and view reports.
-          </p>
+          {user?.email && (
+            <p className="text-xl text-gray-300 mb-8">
+              Logged in as: {user.email}
+            </p>
+          )}
           <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-8 max-w-2xl mx-auto">
             <h2 className="text-2xl font-semibold text-white mb-4">
               Coming Soon

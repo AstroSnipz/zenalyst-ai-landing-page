@@ -2,9 +2,16 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Header = () => {
   const navigate = useNavigate();
+  const { user, signOut } = useAuth();
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/');
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
@@ -17,19 +24,40 @@ const Header = () => {
             Zenalyst
           </div>
           <div className="flex items-center space-x-4">
-            <Button 
-              variant="ghost" 
-              className="text-white hover:text-purple-300 hover:bg-white/10"
-              onClick={() => navigate('/login')}
-            >
-              Login
-            </Button>
-            <Button 
-              className="bg-purple text-white hover:bg-purple/90 transition-all duration-300 hover:scale-105"
-              onClick={() => navigate('/signup')}
-            >
-              Sign Up
-            </Button>
+            {user ? (
+              <>
+                <Button 
+                  variant="ghost" 
+                  className="text-white hover:text-purple-300 hover:bg-white/10"
+                  onClick={() => navigate('/dashboard')}
+                >
+                  Dashboard
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  className="text-white hover:text-purple-300 hover:bg-white/10"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button 
+                  variant="ghost" 
+                  className="text-white hover:text-purple-300 hover:bg-white/10"
+                  onClick={() => navigate('/login')}
+                >
+                  Login
+                </Button>
+                <Button 
+                  className="bg-purple text-white hover:bg-purple/90 transition-all duration-300 hover:scale-105"
+                  onClick={() => navigate('/signup')}
+                >
+                  Sign Up
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </div>
