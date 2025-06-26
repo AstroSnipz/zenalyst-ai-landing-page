@@ -2,8 +2,11 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowDown } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="pt-32 pb-20 px-6 text-center">
       <div className="container mx-auto max-w-6xl">
@@ -20,6 +23,7 @@ const HeroSection = () => {
           <Button 
             size="lg" 
             className="bg-gradient-to-r from-purple to-blue-600 hover:from-purple/90 hover:to-blue-600/90 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+            onClick={() => navigate('/signup')}
           >
             Start Free Trial
           </Button>
