@@ -9,6 +9,132 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      activities: {
+        Row: {
+          action: string
+          created_at: string
+          description: string | null
+          entity_id: string | null
+          entity_type: string | null
+          id: string
+          user_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          description?: string | null
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          description?: string | null
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      analyses: {
+        Row: {
+          compliance_score: number | null
+          created_at: string
+          description: string | null
+          id: string
+          status: Database["public"]["Enums"]["analysis_status"] | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          compliance_score?: number | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          status?: Database["public"]["Enums"]["analysis_status"] | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          compliance_score?: number | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          status?: Database["public"]["Enums"]["analysis_status"] | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      documents: {
+        Row: {
+          created_at: string
+          document_type: Database["public"]["Enums"]["document_type"] | null
+          file_size: number | null
+          filename: string
+          id: string
+          processed: boolean | null
+          updated_at: string
+          upload_date: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          document_type?: Database["public"]["Enums"]["document_type"] | null
+          file_size?: number | null
+          filename: string
+          id?: string
+          processed?: boolean | null
+          updated_at?: string
+          upload_date?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          document_type?: Database["public"]["Enums"]["document_type"] | null
+          file_size?: number | null
+          filename?: string
+          id?: string
+          processed?: boolean | null
+          updated_at?: string
+          upload_date?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          id: string
+          message: string | null
+          read: boolean | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message?: string | null
+          read?: boolean | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string | null
+          read?: boolean | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           company_name: string | null
@@ -33,6 +159,60 @@ export type Database = {
         }
         Relationships: []
       }
+      red_flags: {
+        Row: {
+          analysis_id: string | null
+          created_at: string
+          description: string | null
+          document_id: string | null
+          id: string
+          resolved: boolean | null
+          severity: Database["public"]["Enums"]["red_flag_severity"] | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          analysis_id?: string | null
+          created_at?: string
+          description?: string | null
+          document_id?: string | null
+          id?: string
+          resolved?: boolean | null
+          severity?: Database["public"]["Enums"]["red_flag_severity"] | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          analysis_id?: string | null
+          created_at?: string
+          description?: string | null
+          document_id?: string | null
+          id?: string
+          resolved?: boolean | null
+          severity?: Database["public"]["Enums"]["red_flag_severity"] | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "red_flags_analysis_id_fkey"
+            columns: ["analysis_id"]
+            isOneToOne: false
+            referencedRelation: "analyses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "red_flags_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -41,6 +221,14 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      analysis_status: "Draft" | "In Progress" | "Completed" | "Archived"
+      document_type:
+        | "Financial Statement"
+        | "Invoice"
+        | "Contract"
+        | "Receipt"
+        | "Other"
+      red_flag_severity: "Low" | "Medium" | "High" | "Critical"
       user_role: "CFO" | "Auditor" | "Investor" | "Consultant" | "Other"
     }
     CompositeTypes: {
@@ -157,6 +345,15 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      analysis_status: ["Draft", "In Progress", "Completed", "Archived"],
+      document_type: [
+        "Financial Statement",
+        "Invoice",
+        "Contract",
+        "Receipt",
+        "Other",
+      ],
+      red_flag_severity: ["Low", "Medium", "High", "Critical"],
       user_role: ["CFO", "Auditor", "Investor", "Consultant", "Other"],
     },
   },

@@ -1,61 +1,44 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { useAuth } from '@/contexts/AuthContext';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import DashboardSidebar from '@/components/dashboard/Sidebar';
+import DashboardHeader from '@/components/dashboard/DashboardHeader';
+import StatCards from '@/components/dashboard/StatCards';
+import QuickActions from '@/components/dashboard/QuickActions';
+import RecentActivity from '@/components/dashboard/RecentActivity';
+import ComplianceChart from '@/components/dashboard/ComplianceChart';
 
 const Dashboard = () => {
-  const { user, signOut } = useAuth();
-
-  const handleLogout = async () => {
-    await signOut();
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-zenalyst">
-      <header className="bg-black/20 backdrop-blur-md border-b border-white/10">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="text-2xl font-bold text-white">
-              Zenalyst Dashboard
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full bg-gray-50">
+        <DashboardSidebar />
+        
+        <div className="flex-1 flex flex-col">
+          <DashboardHeader />
+          
+          <main className="flex-1 p-6 space-y-6">
+            <StatCards />
+            
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+              <div className="xl:col-span-2">
+                <QuickActions />
+              </div>
+              <div>
+                <RecentActivity />
+              </div>
             </div>
-            <Button 
-              variant="ghost" 
-              className="text-white hover:text-purple-300 hover:bg-white/10"
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>
-          </div>
+            
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+              <ComplianceChart />
+              <div className="space-y-6">
+                {/* Additional charts or widgets can go here */}
+              </div>
+            </div>
+          </main>
         </div>
-      </header>
-      
-      <main className="container mx-auto px-6 py-12">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-6">
-            Welcome to Your Dashboard
-          </h1>
-          {user?.email && (
-            <p className="text-xl text-gray-300 mb-8">
-              Logged in as: {user.email}
-            </p>
-          )}
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-8 max-w-2xl mx-auto">
-            <h2 className="text-2xl font-semibold text-white mb-4">
-              Coming Soon
-            </h2>
-            <p className="text-gray-300">
-              Dashboard features are under development. You'll soon be able to:
-            </p>
-            <ul className="text-left text-gray-300 mt-4 space-y-2">
-              <li>• Upload documents for analysis</li>
-              <li>• View due diligence reports</li>
-              <li>• Track project progress</li>
-              <li>• Manage team access</li>
-            </ul>
-          </div>
-        </div>
-      </main>
-    </div>
+      </div>
+    </SidebarProvider>
   );
 };
 
