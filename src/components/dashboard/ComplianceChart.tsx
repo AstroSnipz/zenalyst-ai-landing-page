@@ -63,13 +63,13 @@ const ComplianceChart = () => {
 
   if (loading) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Compliance Trends</CardTitle>
+      <Card className="border-0 shadow-lg bg-white">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-xl font-bold text-gray-900">Compliance Trends</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="h-80 flex items-center justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gradient-to-r from-purple-500 to-purple-600"></div>
           </div>
         </CardContent>
       </Card>
@@ -77,33 +77,48 @@ const ComplianceChart = () => {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Compliance Trends</CardTitle>
+    <Card className="border-0 shadow-lg bg-white">
+      <CardHeader className="pb-4">
+        <CardTitle className="text-xl font-bold text-gray-900">Compliance Trends</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" />
+            <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
               <XAxis 
                 dataKey="date" 
-                tick={{ fontSize: 12 }}
+                tick={{ fontSize: 12, fill: '#6b7280' }}
                 interval="preserveStartEnd"
+                stroke="#e5e7eb"
               />
               <YAxis 
                 domain={[0, 100]}
-                tick={{ fontSize: 12 }}
+                tick={{ fontSize: 12, fill: '#6b7280' }}
+                stroke="#e5e7eb"
               />
-              <Tooltip />
+              <Tooltip 
+                contentStyle={{
+                  backgroundColor: 'white',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '8px',
+                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                }}
+              />
               <Line 
                 type="monotone" 
                 dataKey="score" 
-                stroke="#7c3aed" 
-                strokeWidth={2}
-                dot={{ fill: '#7c3aed', strokeWidth: 2, r: 4 }}
-                activeDot={{ r: 6 }}
+                stroke="url(#colorGradient)"
+                strokeWidth={3}
+                dot={{ fill: '#7c3aed', strokeWidth: 2, r: 5 }}
+                activeDot={{ r: 7, fill: '#7c3aed', strokeWidth: 2 }}
               />
+              <defs>
+                <linearGradient id="colorGradient" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#1E3A8A" />
+                  <stop offset="100%" stopColor="#7C3AED" />
+                </linearGradient>
+              </defs>
             </LineChart>
           </ResponsiveContainer>
         </div>

@@ -67,18 +67,27 @@ const RecentActivity = () => {
 
   const getActivityColor = (entityType: string | null) => {
     switch (entityType) {
-      case 'Document': return 'bg-blue-500';
-      case 'Analysis': return 'bg-green-500';
-      case 'Red Flag': return 'bg-red-500';
-      default: return 'bg-gray-500';
+      case 'Document': return 'bg-gradient-to-r from-blue-500 to-blue-600';
+      case 'Analysis': return 'bg-gradient-to-r from-green-500 to-green-600';
+      case 'Red Flag': return 'bg-gradient-to-r from-red-500 to-red-600';
+      default: return 'bg-gradient-to-r from-gray-500 to-gray-600';
+    }
+  };
+
+  const getBadgeVariant = (entityType: string | null) => {
+    switch (entityType) {
+      case 'Document': return 'bg-blue-50 text-blue-700 border-blue-200';
+      case 'Analysis': return 'bg-green-50 text-green-700 border-green-200';
+      case 'Red Flag': return 'bg-red-50 text-red-700 border-red-200';
+      default: return 'bg-gray-50 text-gray-700 border-gray-200';
     }
   };
 
   if (loading) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Recent Activity</CardTitle>
+      <Card className="border-0 shadow-lg bg-white">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-xl font-bold text-gray-900">Recent Activity</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -98,9 +107,9 @@ const RecentActivity = () => {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Recent Activity</CardTitle>
+    <Card className="border-0 shadow-lg bg-white">
+      <CardHeader className="pb-4">
+        <CardTitle className="text-xl font-bold text-gray-900">Recent Activity</CardTitle>
       </CardHeader>
       <CardContent>
         {activities.length === 0 ? (
@@ -108,27 +117,27 @@ const RecentActivity = () => {
         ) : (
           <div className="space-y-4">
             {activities.map((activity) => (
-              <div key={activity.id} className="flex items-start space-x-4">
-                <Avatar className="w-10 h-10">
-                  <AvatarFallback className={`${getActivityColor(activity.entity_type)} text-white`}>
+              <div key={activity.id} className="flex items-start space-x-4 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                <Avatar className="w-10 h-10 border-2 border-white shadow-md">
+                  <AvatarFallback className={`${getActivityColor(activity.entity_type)} text-white font-semibold`}>
                     {getActivityIcon(activity.action)}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center space-x-2">
-                    <p className="text-sm font-medium text-gray-900 truncate">
+                  <div className="flex items-center space-x-2 mb-1">
+                    <p className="text-sm font-semibold text-gray-900 truncate">
                       {activity.action}
                     </p>
                     {activity.entity_type && (
-                      <Badge variant="secondary" className="text-xs">
+                      <Badge className={`text-xs px-2 py-1 border ${getBadgeVariant(activity.entity_type)}`}>
                         {activity.entity_type}
                       </Badge>
                     )}
                   </div>
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-sm text-gray-600 mb-1">
                     {activity.description}
                   </p>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-gray-400">
                     {formatDistanceToNow(new Date(activity.created_at), { addSuffix: true })}
                   </p>
                 </div>

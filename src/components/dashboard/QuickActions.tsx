@@ -67,28 +67,31 @@ const QuickActions = () => {
       description: 'Upload new documents for analysis',
       icon: Upload,
       action: handleUploadDocuments,
-      color: 'bg-blue-600 hover:bg-blue-700',
+      gradient: 'from-blue-500 to-blue-600',
+      hoverGradient: 'hover:from-blue-600 hover:to-blue-700',
     },
     {
       title: 'Start New Analysis',
       description: 'Begin a new compliance analysis',
       icon: FileText,
       action: handleStartNewAnalysis,
-      color: 'bg-green-600 hover:bg-green-700',
+      gradient: 'from-green-500 to-green-600',
+      hoverGradient: 'hover:from-green-600 hover:to-green-700',
     },
     {
       title: 'Generate Report',
       description: 'Create comprehensive reports',
       icon: BarChart,
       action: handleGenerateReport,
-      color: 'bg-purple-600 hover:bg-purple-700',
+      gradient: 'from-purple-500 to-purple-600',
+      hoverGradient: 'hover:from-purple-600 hover:to-purple-700',
     },
   ];
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Quick Actions</CardTitle>
+    <Card className="border-0 shadow-lg bg-white">
+      <CardHeader className="pb-4">
+        <CardTitle className="text-xl font-bold text-gray-900">Quick Actions</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -96,12 +99,12 @@ const QuickActions = () => {
             <Button
               key={index}
               onClick={action.action}
-              className={`${action.color} text-white p-6 h-auto flex flex-col items-center space-y-2`}
+              className={`bg-gradient-to-r ${action.gradient} ${action.hoverGradient} text-white p-6 h-auto flex flex-col items-center space-y-3 border-0 shadow-lg transition-all duration-300 transform hover:scale-105`}
             >
               <action.icon className="h-8 w-8" />
               <div className="text-center">
-                <div className="font-semibold">{action.title}</div>
-                <div className="text-sm opacity-90">{action.description}</div>
+                <div className="font-semibold text-base">{action.title}</div>
+                <div className="text-sm opacity-90 mt-1">{action.description}</div>
               </div>
             </Button>
           ))}
