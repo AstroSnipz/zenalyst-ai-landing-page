@@ -106,7 +106,7 @@ const Upload = () => {
         ...prev,
         [category]: prev[category].map(f => 
           f.id === fileUpload.id 
-            ? { ...f, status: 'uploading' as const, progress: 0 }
+            ? { ...f, status: 'uploading' as const, progress: 25 }
             : f
         )
       }));
@@ -114,21 +114,19 @@ const Upload = () => {
       // Upload to Supabase Storage
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from(bucket)
-        .upload(filePath, fileUpload.file, {
-          onUploadProgress: (progress) => {
-            const percentage = Math.round((progress.loaded / progress.total) * 100);
-            setFiles(prev => ({
-              ...prev,
-              [category]: prev[category].map(f => 
-                f.id === fileUpload.id 
-                  ? { ...f, progress: percentage }
-                  : f
-              )
-            }));
-          }
-        });
+        .upload(filePath, fileUpload.file);
 
       if (uploadError) throw uploadError;
+
+      // Update progress
+      setFiles(prev => ({
+        ...prev,
+        [category]: prev[category].map(f => 
+          f.id === fileUpload.id 
+            ? { ...f, progress: 75 }
+            : f
+        )
+      }));
 
       // Get public URL
       const { data: { publicUrl } } = supabase.storage
