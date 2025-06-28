@@ -74,36 +74,45 @@ export type Database = {
       }
       documents: {
         Row: {
+          bucket_name: string | null
           created_at: string
           document_type: Database["public"]["Enums"]["document_type"] | null
           file_size: number | null
+          file_url: string | null
           filename: string
           id: string
           processed: boolean | null
           updated_at: string
           upload_date: string
+          upload_status: string | null
           user_id: string
         }
         Insert: {
+          bucket_name?: string | null
           created_at?: string
           document_type?: Database["public"]["Enums"]["document_type"] | null
           file_size?: number | null
+          file_url?: string | null
           filename: string
           id?: string
           processed?: boolean | null
           updated_at?: string
           upload_date?: string
+          upload_status?: string | null
           user_id: string
         }
         Update: {
+          bucket_name?: string | null
           created_at?: string
           document_type?: Database["public"]["Enums"]["document_type"] | null
           file_size?: number | null
+          file_url?: string | null
           filename?: string
           id?: string
           processed?: boolean | null
           updated_at?: string
           upload_date?: string
+          upload_status?: string | null
           user_id?: string
         }
         Relationships: []

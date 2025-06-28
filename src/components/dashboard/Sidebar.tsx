@@ -1,12 +1,13 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, TrendingUp, Users, ShoppingCart, FileText, Settings } from 'lucide-react';
+import { Home, TrendingUp, Users, ShoppingCart, FileText, Settings, Upload } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useSidebar } from '@/components/ui/sidebar';
 
 const navigationItems = [
   { name: 'Dashboard', href: '/dashboard', icon: Home },
+  { name: 'Upload', href: '/dashboard/upload', icon: Upload },
   { name: 'Revenue', href: '/dashboard/revenue', icon: TrendingUp },
   { name: 'Payroll', href: '/dashboard/payroll', icon: Users },
   { name: 'Purchase Orders', href: '/dashboard/orders', icon: ShoppingCart },
