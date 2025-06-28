@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { SidebarProvider } from '@/components/ui/sidebar';
+import { Card } from '@/components/ui/card';
 import DashboardSidebar from '@/components/dashboard/Sidebar';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import StatCards from '@/components/dashboard/StatCards';
