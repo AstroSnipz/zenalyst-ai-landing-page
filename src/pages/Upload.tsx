@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { Upload, FileText, X, Check, AlertCircle } from 'lucide-react';
+import { Upload as UploadIcon, FileText, X, Check, AlertCircle } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
@@ -337,7 +337,7 @@ const Upload = () => {
         onDragOver={onDragOver}
         onClick={() => document.getElementById(`file-input-${type}`)?.click()}
       >
-        <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+        <UploadIcon className="mx-auto h-12 w-12 text-gray-400 mb-4" />
         <p className="text-lg font-medium text-gray-700 mb-2">
           Drop files here or click to browse
         </p>
@@ -395,7 +395,7 @@ const Upload = () => {
                   
                   {file.status === 'uploading' && (
                     <div className="mt-2">
-                      <Progress value={file.progress} className="h-2" />
+                      <Progress value={file.progress} />
                     </div>
                   )}
                 </div>
